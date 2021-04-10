@@ -1,0 +1,137 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task 3.1</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- <script src="https://d3js.org/d3.v6.min.js"></script> -->
+    <script src="./d3.js"></script>
+    
+</head>
+
+<body>
+
+</body>
+</html>
+
+<script>
+
+d3.csv("gapminder/population_total.csv" ).then(function(data){
+    console.log('Main data .....')
+    console.log(data)
+
+    
+
+    //output range between 2005 t0 2015
+    var cols05and15 = data.map(function(d) {
+    return {
+        2005: d[2005],
+        2006: d[2006],
+        2007: d[2007],
+        2008: d[2008],
+        2009: d[2009],
+        2010: d[2010],
+        2011: d[2011],
+        2012: d[2012],
+        2013: d[2013],
+        2014: d[2014],
+        2015: d[2015]
+    }
+    });
+    console.log('Data between 2005 and 2015')
+    console.log(cols05and15)
+
+
+    //sort data in descending order
+    cols05and15.sort((a,b) =>{
+        return d3.descending(parseInt(a[2015] ),parseInt(b[2015]))
+    });
+    console.log('Sorted data of countries between 2000 and 2015 in descending order.....')
+    console.log(cols05and15)
+
+
+    //output first 50 countries
+    console.log('Top 50  of 2015 sorted data .....')
+    console.log(cols05and15.slice(0,50))
+    
+    
+   //read data in 2000
+    data2000 = data.map(function(d) {
+    return d[2000]
+    });
+    console.log('Read 2000 data')
+    console.log(data2000)
+
+    console.log('Read 2000 data')
+    console.log(data2000)
+
+
+    //filter data 2000
+    let filteredData = data2000.filter(d =>{
+        return d < 100000000
+    });
+    console.log('2000 data < 100000000')
+    console.log(filteredData)
+
+    //sort data in 2000
+    let sort2000 = data2000.sort((a,b) =>{
+        return d3.descending(parseInt(a) ,parseInt(b))
+    });
+    console.log('2000 sorted data descending data')
+    console.log(sort2000)
+
+    //output to 10 countries
+    console.log('2000 sorted data descending data top 10')
+    console.log(sort2000.slice(0,10))
+
+
+    //sum of all data in 2000 using reduce
+    var total2000 = data2000.reduce(function(sum, d) {
+        return sum + parseInt(d);
+    }, 0);
+    console.log('2000 total data using reduce')
+    console.log(total2000)
+
+
+
+    //get the mean of 2000
+    const n = data2000.length
+    var mean2000 = total2000/n
+    console.log('2000 data mean-------')
+    console.log(mean2000)
+
+    // get standard deviation
+    var standardDevitation = Math.sqrt(data2000.map(x => Math.pow(x - mean2000, 2)).reduce((a, b) => a + b) / n)
+    console.log('Standard devitation...')
+    console.log(standardDevitation)
+
+   
+    //output 2000 top 10 countries and least10
+    var countries2000 = data.map(function(d){
+    return{
+            country:d.country,
+            2000: d[2000]
+        } 
+    });
+     let sortcountries = countries2000.sort((a,b) =>{
+        return d3.descending(parseInt(a[2000] ),parseInt(b[2000]))
+    });
+    console.log(sortcountries)
+
+
+    let top10 = sortcountries.map(function(d){
+        return d.country
+    })
+    console.log('2000 data top 10 countries-------')
+    console.log(top10.slice(0,10))
+
+    console.log('2000 data least 10 countries----')
+    console.log(top10.slice(Math.max(top10.length-10 ,1)))
+   
+
+});
+
+
+
+</script>
